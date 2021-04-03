@@ -1,0 +1,38 @@
+import path from 'path';
+import fs from 'fs';
+import User from '@modules/users/infra/typeorm/entities/User';
+import uploadConfig from '@config/upload';
+import AppError from '@shared/errors/AppError';
+import IUsersRepository from '@modules/users/repositories/IUsersRepository';
+import { inject, injectable } from 'tsyringe';
+
+interface IAvatarDTO {
+   user_id: string;
+   avatarFilename: string;
+}
+
+@injectable()
+export default class UpdateUserAvatarService {
+   constructor(@inject('UsersRepository') private userRepository: IUsersRepository) {}
+
+   public async execute({ user_id, avatarFilename }: IAvatarDTO): Promise<User> {
+      const user = await this.userRepository.findById(user_id);
+
+      if (!user) {
+         throw new AppError('Only authenticate users can change avatars', 401);
+      }
+
+      if (user.avatar) {
+         const userAvatarFilePath = path.join(uploadConfig.directory, user.avatar);
+         const userAvatarFileExists = await fs.promises.stat(userAvatarFilePath);
+
+         if (userAvatarFileExists) {
+            await fs.promises.unlink(userAvatarFilePath);
+         }
+      }
+
+      user.avatar = avatarFilename;
+      await this.userRepository.create(user);
+      return user;
+   }
+}
