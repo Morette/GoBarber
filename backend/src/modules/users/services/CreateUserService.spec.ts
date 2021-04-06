@@ -1,11 +1,13 @@
 import MockUserRepository from '@modules/users/repositories/mocks/MockUserRepository';
+import MockHashProvider from '@modules/users/providers/mocks/MockHashProvider';
 import AppError from '@shared/errors/AppError';
 import CreateUserService from './CreateUserService';
 
 describe('CreateUser', () => {
    it('should be able to create a new user', async () => {
       const mockRepository = new MockUserRepository();
-      const createAppointmentService = new CreateUserService(mockRepository);
+      const mockHashProvider = new MockHashProvider();
+      const createAppointmentService = new CreateUserService(mockRepository, mockHashProvider);
       const user = await createAppointmentService.execute({
          name: 'thiago',
          email: 'thiago@email.com',
@@ -18,7 +20,8 @@ describe('CreateUser', () => {
 
    it('should not be able to create a new user with an existing email', async () => {
       const mockRepository = new MockUserRepository();
-      const createAppointmentService = new CreateUserService(mockRepository);
+      const mockHashProvider = new MockHashProvider();
+      const createAppointmentService = new CreateUserService(mockRepository, mockHashProvider);
       await createAppointmentService.execute({
          name: 'thiago',
          email: 'thiago@email.com',

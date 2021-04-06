@@ -1,12 +1,14 @@
 import MockUserRepository from '@modules/users/repositories/mocks/MockUserRepository';
+import MockHashProvider from '@modules/users/providers/mocks/MockHashProvider';
 import AuthenticateUserService from './AuthenticateUserService';
 import CreateUserService from './CreateUserService';
 
 describe('AuthenticateUser', () => {
    it('should be able to authenticate', async () => {
       const mockRepository = new MockUserRepository();
-      const createUser = new CreateUserService(mockRepository);
-      const authenticateUserService = new AuthenticateUserService(mockRepository);
+      const mockHashProvider = new MockHashProvider();
+      const createUser = new CreateUserService(mockRepository, mockHashProvider);
+      const authenticateUserService = new AuthenticateUserService(mockRepository, mockHashProvider);
 
       await createUser.execute({
          name: 'thiago',
@@ -20,5 +22,6 @@ describe('AuthenticateUser', () => {
       });
 
       expect(user).toHaveProperty('token');
+      expect(user.user).toEqual(user);
    });
 });
