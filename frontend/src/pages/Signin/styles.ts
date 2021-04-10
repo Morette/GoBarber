@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { shade } from 'polished';
 
+import { colors } from '../../styles/colors';
+
 import SigninBackGround from '../../assets/sign-in-background.png';
 
 export const Container = styled.div`
@@ -29,20 +31,20 @@ export const Content = styled.div`
     }
 
     a {
-      color: #f4ede8;
+      color: ${colors.white};
       display: block;
       margin-top: 24px;
       text-decoration: none;
       transition: color linear 200ms;
 
       &:hover {
-        color: ${shade(0.2, '#f4ede8')};
+        color: ${shade(0.2, colors.white)};
       }
     }
   }
 
   > a {
-    color: #ff9000;
+    color: ${colors.orange};
     display: block;
     margin-top: 24px;
     text-decoration: none;
@@ -52,7 +54,7 @@ export const Content = styled.div`
     align-items: center;
 
     &:hover {
-      color: ${shade(0.2, '#ff9000')};
+      color: ${shade(0.2, colors.orange)};
     }
 
     svg {
