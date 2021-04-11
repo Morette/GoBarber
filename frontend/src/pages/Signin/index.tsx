@@ -10,12 +10,14 @@ import Button from '../../components/Button';
 import Input from '../../components/Input';
 
 import { Container, Content, BackGround } from './styles';
-import { useAuth } from '../../hooks/AuthContext';
+import { useAuth } from '../../hooks/auth';
 import { SignIn } from '../../InterfaceModels/SignIn';
+import { useToast } from '../../hooks/toast';
 
 const Signin: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const { signIn } = useAuth();
+  const { addToast, removeToast } = useToast();
 
   const handleSubmit = useCallback(
     async (data: SignIn) => {
@@ -30,16 +32,20 @@ const Signin: React.FC = () => {
           abortEarly: false,
         });
 
-        signIn({
+        await signIn({
           email: data.email,
           password: data.password,
         });
       } catch (err) {
-        const errors = getValidationErrors(err);
-        formRef.current?.setErrors(errors);
+        if (err instanceof Yup.ValidationError) {
+          const errors = getValidationErrors(err);
+          formRef.current?.setErrors(errors);
+        }
+
+        addToast();
       }
     },
-    [signIn],
+    [signIn, addToast],
   );
 
   return (
