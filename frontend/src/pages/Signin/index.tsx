@@ -11,11 +11,11 @@ import Input from '../../components/Input';
 
 import { Container, Content, BackGround } from './styles';
 import { AuthContext } from '../../context/AuthContext';
-import { SignInInterface } from '../../InterfaceModels/SignInInterface';
+import { SignInInterface } from '../../InterfaceModels/SignIn-Interface';
 
 const Signin: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
-  const { signIn } = useContext(AuthContext);
+  const { user, signIn } = useContext(AuthContext);
 
   const handleSubmit = useCallback(
     async (data: SignInInterface) => {
