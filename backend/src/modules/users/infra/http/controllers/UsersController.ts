@@ -14,6 +14,7 @@ export default class UsersController {
             id: user.id,
             name: user.name,
             email: user.email,
+            avatar: user.avatar,
             created_at: user.created_at,
          },
          token,
