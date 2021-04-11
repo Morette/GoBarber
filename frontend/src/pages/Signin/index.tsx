@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useRef } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import { FiLogIn, FiMail, FiLock } from 'react-icons/fi';
@@ -10,15 +10,15 @@ import Button from '../../components/Button';
 import Input from '../../components/Input';
 
 import { Container, Content, BackGround } from './styles';
-import { AuthContext } from '../../context/AuthContext';
-import { SignInInterface } from '../../InterfaceModels/SignIn-Interface';
+import { useAuth } from '../../hooks/AuthContext';
+import { SignIn } from '../../InterfaceModels/SignIn';
 
 const Signin: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
-  const { user, signIn } = useContext(AuthContext);
+  const { signIn } = useAuth();
 
   const handleSubmit = useCallback(
-    async (data: SignInInterface) => {
+    async (data: SignIn) => {
       try {
         formRef.current?.setErrors({});
         const schema = Yup.object().shape({
