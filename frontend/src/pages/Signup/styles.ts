@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { shade } from 'polished';
 
 import { colors } from '../../styles/colors';
@@ -16,10 +16,30 @@ export const Content = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 
-  place-content: center;
   width: 100%;
   max-width: 700px;
+`;
+
+const appearFromRight = keyframes`
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+`;
+
+export const AnimationContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  animation: ${appearFromRight} 2s;
 
   form {
     margin: 80px 0;
@@ -27,13 +47,24 @@ export const Content = styled.div`
     text-align: center;
 
     h1 {
-      font-size: 24px;
       margin-bottom: 24px;
+    }
+
+    a {
+      color: ${colors.white};
+      display: block;
+      margin-top: 24px;
+      text-decoration: none;
+      transition: color linear 200ms;
+
+      &:hover {
+        color: ${shade(0.2, colors.white)};
+      }
     }
   }
 
   > a {
-    color: ${colors.white};
+    color: ${colors.orange};
     display: block;
     margin-top: 24px;
     text-decoration: none;
@@ -43,7 +74,7 @@ export const Content = styled.div`
     align-items: center;
 
     &:hover {
-      color: ${shade(0.2, colors.white)};
+      color: ${shade(0.2, colors.orange)};
     }
 
     svg {

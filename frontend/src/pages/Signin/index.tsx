@@ -1,4 +1,5 @@
 import React, { useCallback, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import { FiLogIn, FiMail, FiLock } from 'react-icons/fi';
@@ -9,7 +10,7 @@ import logo from '../../assets/logo.svg';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 
-import { Container, Content, BackGround } from './styles';
+import { Container, Content, AnimationContainer, BackGround } from './styles';
 import { useAuth } from '../../hooks/auth';
 import { SignIn } from '../../InterfaceModels/SignIn';
 import { useToast } from '../../hooks/toast';
@@ -55,18 +56,20 @@ const Signin: React.FC = () => {
   return (
     <Container>
       <Content>
-        <img src={logo} alt="GoBarber" />
-        <Form ref={formRef} onSubmit={handleSubmit}>
-          <h1>Logon</h1>
-          <Input name="email" placeholder="Email" type="email" icon={FiMail} />
-          <Input name="password" placeholder="Password" type="password" icon={FiLock} />
-          <Button type="submit">Enter</Button>
-          <a href="forgot">Forgot Password</a>
-        </Form>
-        <a href="create">
-          <FiLogIn />
-          Create Account
-        </a>
+        <AnimationContainer>
+          <img src={logo} alt="GoBarber" />
+          <Form ref={formRef} onSubmit={handleSubmit}>
+            <h1>Logon</h1>
+            <Input name="email" placeholder="Email" type="email" icon={FiMail} />
+            <Input name="password" placeholder="Password" type="password" icon={FiLock} />
+            <Button type="submit">Enter</Button>
+            <a href="forgot">Forgot Password</a>
+          </Form>
+          <Link to="/signup">
+            <FiLogIn />
+            Create Account
+          </Link>
+        </AnimationContainer>
       </Content>
       <BackGround />
     </Container>
