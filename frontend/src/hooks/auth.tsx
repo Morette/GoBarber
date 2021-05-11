@@ -1,10 +1,10 @@
 import React, { createContext, useCallback, useContext, useState } from 'react';
-import { SignIn } from '../InterfaceModels/SignIn';
+import { SignInFormData } from '../InterfaceModels/SignIn';
 import api from '../services/api';
 
 interface AuthContextData {
   user: Record<string, unknown>;
-  signIn(credentials: SignIn): Promise<void>;
+  signIn(credentials: SignInFormData): Promise<void>;
   signOut(): void;
 }
 
@@ -48,7 +48,7 @@ const useAuth = (): AuthContextData => {
   const context = useContext(AuthContext);
 
   if (!context) {
-    throw new Error('useAuth must be used whhithin a AuthProvider');
+    throw new Error('useAuth must be used whithin a AuthProvider');
   }
 
   return context;
